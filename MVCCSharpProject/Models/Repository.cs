@@ -30,6 +30,58 @@ namespace MVCCSharpProject.Models
                 command.ExecuteNonQuery();
             }
         }
+
+
+        // ADDED THIS CODE TO GET THE CUSTOMER SELECTED IN THE LIST AND WE WILL USE IT FOR THE DELETE OPERATION TOO.
+
+        internal Customers GetCustomerForEdit(string ID)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"SELECT *
+                                    FROM CustomersTable WHERE ID = @ID";
+
+                command.Parameters.AddWithValue("@ID", ID);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                Customers customers = null;
+                while (reader.Read())
+                {
+                    customers = new Customers();
+                    customers.Id = (int)reader["Id"];
+                    customers.CustomerName = reader["CustomerName"] as string;
+                    customers.CustomerAddress = reader["CustomerAddress"] as string;
+                    customers.CustomerPhone = reader["CustomerPhone"] as string;
+                }
+                return customers;
+            }
+        }
+
+
+
+
+        // added this method to update customer
+
+        internal void UpdateCustomer(Customers customer)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"Update customersTable set CustomerName =@CustomerName,
+                                                                CustomerAddress=@CustomerAddress,
+                                                                CustomerPhone =@CustomerPhone
+                                      WHERE Id = @Id";
+
+                command.Parameters.AddWithValue("@Id", customer.Id);
+                command.Parameters.AddWithValue("@CustomerName", customer.CustomerName);
+                command.Parameters.AddWithValue("@CustomerAddress", customer.CustomerAddress);
+                command.Parameters.AddWithValue("@CustomerPhone", customer.CustomerPhone);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
         internal List<Customers> GetCustomerReport()
         {
             using (var connection = new SqlConnection(_connectionString))

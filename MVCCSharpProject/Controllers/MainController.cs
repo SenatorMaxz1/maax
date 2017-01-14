@@ -42,5 +42,26 @@ namespace MVCCSharpProject.Controllers
             var customersReport = _repository.GetCustomerReport();
             return View(customersReport);
         }
+
+
+
+
+  // Added these two actions for update operation
+        public ActionResult Update(string ID)
+        {
+            var customerInfo = _repository.GetCustomerForEdit(ID);
+            return View(customerInfo);
+        }
+
+        [HttpPost]
+        public ActionResult Update(Customers customer)
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.UpdateCustomer(customer);
+                TempData["Success"] = "Successfull Updated Customer";
+            }
+            return View();
+        }
     }
 }
