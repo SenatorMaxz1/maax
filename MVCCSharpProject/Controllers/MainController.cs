@@ -37,9 +37,9 @@ namespace MVCCSharpProject.Controllers
         }
 
 
-        public ActionResult CustomersReport()
+        public ActionResult CustomersReport(string searchTerm)
         {
-            var customersReport = _repository.GetCustomerReport();
+            var customersReport = _repository.GetCustomerReport(searchTerm);
             return View(customersReport);
         }
 

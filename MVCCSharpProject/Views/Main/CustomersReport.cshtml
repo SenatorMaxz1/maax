@@ -6,9 +6,23 @@
 
 <h2>CustomersReport</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+
+<form method="get">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="searchTerm" value="" />
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-info"> <i class="glyphicon glyphicon-search"></i> Search</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
 <table class="table table-bordered table-hover">
     <tr>
         <th>
@@ -23,23 +37,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerPhone)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Update", new { id=item.Id } , new { @class ="btn btn-success" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn btn-warning" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn fa fa-trash btn-primary" })
-        </td >
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerPhone)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id = item.Id }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn fa fa-trash btn-primary" })
+            </td>
+        </tr>
+    }
 
 </table>

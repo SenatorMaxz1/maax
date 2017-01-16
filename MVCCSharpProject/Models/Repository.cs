@@ -82,13 +82,16 @@ namespace MVCCSharpProject.Models
             }
         }
 
-        internal List<Customers> GetCustomerReport()
+        internal List<Customers> GetCustomerReport(string searchTerm)
         {
             using (var connection = new SqlConnection(_connectionString))
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = @"SELECT *
-                                    FROM CustomersTable";
+                                        FROM CustomersTable
+                                        WHERE CustomerName LIKE @searchTerm";
+
+                command.Parameters.AddWithValue("@searchTerm", searchTerm + "%%");
                 connection.Open();
                 var reader = command.ExecuteReader();
                 var customers = new List<Customers>();
